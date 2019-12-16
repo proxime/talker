@@ -1,0 +1,6 @@
+export const SET_SOCKET = 'SET_SOCKET';
+export const SET_USER_NUMBER = 'SET_USER_NUMBER';
+export const FIND_USER = 'FIND_USER';
+export const SET_OPPONENT_NICK = 'SET_OPPONENT_NICK';
+export const USER_DISCONNECTED = 'USER_DISCONNECTED';
+export const ADD_MESSAGE = 'ADD_MESSAGE';

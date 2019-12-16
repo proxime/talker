@@ -1,0 +1,176 @@
+.conversation {
+    width: 100%;
+    max-width: 1000px;
+    height: calc(100vh - 80px);
+    min-height: 300px;
+    margin: 0 auto;
+    padding: 50px 10px;
+    display: flex;
+    @media (max-width: 800px) {
+        padding: 20px 10px;
+    }
+    &__box {
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        border: 2px solid $main-color;
+        display: flex;
+        flex-direction: column;
+    }
+    &__main {
+        flex-grow: 1;
+        padding: 10px 20px;
+        color: #333;
+        font-size: 1.4rem;
+        overflow-y: auto;
+    }
+    &__say-hello {
+        font-size: 1.7rem;
+        font-weight: bold;
+        padding: 10px 0 20px;
+        span {
+            color: #0091ea;
+        }
+        @media (max-width: 500px) {
+            font-size: 1.5rem;
+            padding: 10px 0;
+        }
+    }
+    &__dissconected {
+        color: red;
+        font-weight: bold;
+        font-size: 1.7rem;
+        padding: 10px 0;
+        @media (max-width: 500px) {
+            font-size: 1.4rem;
+        }
+    }
+    &__msg {
+        padding: 3px 0;
+    }
+    &__opponent {
+        color: #0091ea;
+        font-weight: bold;
+    }
+    &__me {
+        color: #64dd17;
+        font-weight: bold;
+    }
+    &__form {
+        height: 60px;
+        flex-shrink: 0;
+        form {
+            height: 100%;
+            display: flex;
+        }
+        textarea {
+            flex-grow: 1;
+            outline: none;
+            border: none;
+            border-top: 2px solid $main-color;
+            border-right: 2px solid $main-color;
+            padding: 7px 10px;
+            font-size: 1.5rem;
+            resize: none;
+            background-color: #ffab40;
+            color: white;
+            &::placeholder {
+                color: white;
+            }
+        }
+        button {
+            width: 80px;
+            outline: none;
+            cursor: pointer;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border: none;
+            border-top: 2px solid $main-color;
+            background-color: #ff6d00;
+            color: white;
+            transition: background-color 0.1s ease-in;
+            &:hover {
+                background-color: darken(#ff6d00, 2%);
+            }
+        }
+    }
+    &__disconnect {
+        height: 60px;
+        flex-shrink: 0;
+        background-color: #ffab40;
+        display: flex;
+    }
+    &__searching {
+        position: relative;
+        width: 100%;
+        text-align: center;
+        line-height: 60px;
+        font-size: 2.2rem;
+        border-top: 2px solid $main-color;
+        &::after {
+            content: '';
+            position: absolute;
+            background-color: #ffab40;
+            width: 16px;
+            height: 100%;
+            margin-left: -16px;
+            animation: dot-searching 1.5s linear infinite;
+        }
+    }
+    &__disconnect-text {
+        flex-grow: 1;
+        outline: none;
+        border: none;
+        border-top: 2px solid $main-color;
+        border-right: 2px solid $main-color;
+        padding: 7px 10px;
+        font-size: 2rem;
+        background-color: #ffab40;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media (max-width: 500px) {
+            font-size: 1.6rem;
+        }
+    }
+    &__disconnect-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        outline: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border: none;
+        border-top: 2px solid $main-color;
+        background-color: #ff6d00;
+        color: white;
+        transition: background-color 0.1s ease-in;
+        @media (max-width: 500px) {
+            font-size: 1.3rem;
+        }
+        &:hover {
+            background-color: darken(#ff6d00, 2%);
+        }
+    }
+}
+
+@keyframes dot-searching {
+    0% {
+        margin-left: -16px;
+    }
+    32%,
+    33% {
+        margin-left: -8px;
+    }
+    65%,
+    66% {
+        margin-left: -0px;
+    }
+    100% {
+        margin-left: -0px;
+    }
+}

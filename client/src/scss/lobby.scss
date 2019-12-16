@@ -1,0 +1,160 @@
+.lobby {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    @media (max-width: 800px) {
+        flex-direction: column;
+    }
+    &__leftside {
+        position: relative;
+        flex-basis: 50%;
+        background-color: #e67e22;
+        background-image: url('../img/conversation.jpg');
+        background-position: center 72%;
+        background-size: cover;
+        @media (max-width: 800px) {
+            height: 30vh;
+            flex-basis: auto;
+            min-height: 200px;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(230, 126, 34, 0.2);
+        }
+    }
+    &__search-box {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 50%;
+        padding: 30px 50px;
+        @media (max-width: 1024px) {
+            padding: 20px 30px;
+        }
+        @media (max-width: 800px) {
+            flex-basis: auto;
+            flex-grow: 1;
+        }
+    }
+    &__title {
+        font-size: 5rem;
+        font-weight: 300;
+        color: $main-color;
+        margin-bottom: 50px;
+        @media (max-width: 1024px) {
+            font-size: 4rem;
+        }
+    }
+    &__form {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        color: black;
+        margin-bottom: 30px;
+    }
+    &__nick {
+        font-size: 1.2rem;
+        font-weight: 300;
+        color: $main-color;
+    }
+    &__nick-input {
+        font-size: 1.8rem;
+        padding: 8px 10px;
+        border: none;
+        border-bottom: 2px solid $main-color;
+        width: 100%;
+        outline: none;
+        margin-bottom: 20px;
+    }
+    &__button {
+        font-size: 1.4rem;
+        cursor: pointer;
+        font-weight: 600;
+        align-self: flex-start;
+        padding: 8px 15px;
+        border-radius: 5px;
+        border: none;
+        background-color: $main-color;
+        color: white;
+        outline: none;
+        transition: background-color 0.1s ease-in;
+        user-select: none;
+        &:hover {
+            background-color: darken($main-color, 3%);
+        }
+    }
+    &__messagess {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        img {
+            height: 350px;
+            opacity: 0.75;
+            user-select: none;
+            @media (max-width: 1600px) {
+                height: 300px;
+            }
+            @media (max-width: 1366px) {
+                height: 250px;
+            }
+            @media (max-width: 1024px) {
+                height: 200px;
+            }
+            @media (max-width: 800px) {
+                height: 150px;
+            }
+        }
+    }
+    &__searching {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+        height: 105px;
+    }
+}
+
+.loading {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border: 8px solid $main-color;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: $main-color transparent transparent transparent;
+        &:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+        &:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+        &:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+    }
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
