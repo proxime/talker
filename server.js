@@ -65,6 +65,50 @@ io.on('connection', socket => {
                 io.to(newConveration.id).emit('msg', { nick, msg });
             });
 
+            user1.socket.on('search new', function() {
+                const talking = conversations.findIndex(
+                    conversation =>
+                        conversation.users.user1.id === socket.id ||
+                        conversation.users.user2.id === socket.id
+                );
+
+                if (talking > -1) {
+                    conversations[talking].users.user1.socket.leave(
+                        conversations[talking].id
+                    );
+                    conversations[talking].users.user2.socket.leave(
+                        conversations[talking].id
+                    );
+
+                    user1.socket.emit('search new');
+                    user2.socket.emit('closed');
+
+                    conversations.splice(talking, 1);
+                }
+            });
+
+            user2.socket.on('search new', function() {
+                const talking = conversations.findIndex(
+                    conversation =>
+                        conversation.users.user1.id === socket.id ||
+                        conversation.users.user2.id === socket.id
+                );
+
+                if (talking > -1) {
+                    conversations[talking].users.user1.socket.leave(
+                        conversations[talking].id
+                    );
+                    conversations[talking].users.user2.socket.leave(
+                        conversations[talking].id
+                    );
+
+                    user2.socket.emit('search new');
+                    user1.socket.emit('closed');
+
+                    conversations.splice(talking, 1);
+                }
+            });
+
             users = users.filter(
                 user => user.id !== socket.id && user.id !== randomUser.id
             );

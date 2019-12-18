@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const ConversationDisconnect = ({ socket, nick }) => {
+const ConversationDisconnect = ({ socket, nick, searchNew }) => {
     const [search, setSearch] = useState(false);
+
+    useEffect(() => {
+        if (searchNew) {
+            socket.emit('search', nick);
+            setSearch(true);
+        }
+    }, [setSearch]);
 
     const searchNewUser = () => {
         socket.emit('search', nick);
@@ -34,6 +41,7 @@ const ConversationDisconnect = ({ socket, nick }) => {
 const mapStateToProps = state => ({
     socket: state.socket.socket,
     nick: state.socket.nick,
+    searchNew: state.socket.searchNew,
 });
 
 export default connect(mapStateToProps)(ConversationDisconnect);

@@ -5,6 +5,7 @@ import {
     FIND_USER,
     USER_DISCONNECTED,
     ADD_MESSAGE,
+    SEARCH_NEW,
 } from './types';
 
 export const setSocekt = socket => dispatch => {
@@ -45,5 +46,11 @@ export const addMessage = ({ nick, msg }) => dispatch => {
     dispatch({
         type: ADD_MESSAGE,
         payload: { nick, msg },
+    });
+};
+
+export const searchNew = () => dispatch => {
+    dispatch({
+        type: SEARCH_NEW,
     });
 };

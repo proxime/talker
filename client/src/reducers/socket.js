@@ -5,6 +5,7 @@ import {
     FIND_USER,
     USER_DISCONNECTED,
     ADD_MESSAGE,
+    SEARCH_NEW,
 } from '../actions/types';
 
 const initState = {
@@ -13,6 +14,7 @@ const initState = {
     nick: '',
     opponent: '',
     connected: false,
+    searchNew: false,
     messagess: [],
 };
 
@@ -35,6 +37,7 @@ export default (state = initState, action) => {
                 ...state,
                 nick: payload,
                 messagess: [],
+                searchNew: false,
             };
         case SET_OPPONENT_NICK:
             return {
@@ -51,6 +54,11 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 messagess: [...state.messagess, payload],
+            };
+        case SEARCH_NEW:
+            return {
+                ...state,
+                searchNew: true,
             };
         default:
             return state;

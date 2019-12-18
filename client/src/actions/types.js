@@ -4,3 +4,4 @@ export const FIND_USER = 'FIND_USER';
 export const SET_OPPONENT_NICK = 'SET_OPPONENT_NICK';
 export const USER_DISCONNECTED = 'USER_DISCONNECTED';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const SEARCH_NEW = 'SEARCH_NEW';

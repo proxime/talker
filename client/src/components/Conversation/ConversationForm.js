@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
 const ConversationForm = ({ socket, nick }) => {
     const [msg, setMsg] = useState('');
+    const inputEl = useRef(null);
 
     const submitOnEnter = e => {
         if (e.keyCode === 13) sendMsg(e);
@@ -24,8 +25,9 @@ const ConversationForm = ({ socket, nick }) => {
                     value={msg}
                     onChange={e => setMsg(e.target.value)}
                     onKeyDown={e => submitOnEnter(e)}
+                    ref={inputEl}
                 ></textarea>
-                <button>Wyślij</button>
+                <button onClick={() => inputEl.current.focus()}>Wyślij</button>
             </form>
         </div>
     );

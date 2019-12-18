@@ -1,6 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 
-const ConversationMain = ({ opponent, nick, messagess, connected }) => {
+const ConversationMain = ({
+    opponent,
+    nick,
+    messagess,
+    connected,
+    searchNew,
+}) => {
     const messageEl = useRef(null);
     const messagessList =
         messagess &&
@@ -36,6 +42,11 @@ const ConversationMain = ({ opponent, nick, messagess, connected }) => {
             {!connected && (
                 <p className="conversation__dissconected">
                     Osoba, z którą pisałeś się rozłączyła
+                </p>
+            )}
+            {searchNew && (
+                <p className="conversation__dissconected">
+                    Rozłączyłeś się, trwa wyszukiwanie nowej osoby
                 </p>
             )}
         </div>

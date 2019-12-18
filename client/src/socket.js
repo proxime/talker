@@ -6,6 +6,7 @@ import {
     userDisconnected,
     addMessage,
     findUser,
+    searchNew,
 } from './actions/socket';
 
 export default store => {
@@ -28,4 +29,6 @@ export default store => {
     socket.on('msg', ({ nick, msg }) =>
         store.dispatch(addMessage({ nick, msg }))
     );
+
+    socket.on('search new', () => store.dispatch(searchNew()));
 };
