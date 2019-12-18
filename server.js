@@ -13,7 +13,7 @@ let conversations = [];
 io.on('connection', socket => {
     io.emit('usersLength', io.engine.clientsCount);
 
-    socket.on('search', nick => {
+    socket.on('search', async nick => {
         const userExists = users.findIndex(user => user.id === socket.id);
 
         if (userExists > -1) {
@@ -28,6 +28,7 @@ io.on('connection', socket => {
             users.push(newUser);
         }
 
+        // Search for user
         if (users.length >= 2) {
             let randomUser = users[Math.floor(Math.random() * users.length)];
             while (randomUser.id === socket.id)
@@ -41,6 +42,7 @@ io.on('connection', socket => {
                 },
             };
 
+            // Adding users to new conversation
             users.forEach(user => {
                 if (user.id === socket.id) newConveration.users.user1 = user;
                 else if (user.id === randomUser.id)
@@ -54,9 +56,11 @@ io.on('connection', socket => {
             user1.socket.join(newConveration.id);
             user2.socket.join(newConveration.id);
 
+            // Emiting found person
             user1.socket.emit('findChat', user2.nick);
             user2.socket.emit('findChat', user1.nick);
 
+            // Emiting messages to client
             user1.socket.on('msg', function({ nick, msg }) {
                 io.to(newConveration.id).emit('msg', { nick, msg });
             });
@@ -65,50 +69,30 @@ io.on('connection', socket => {
                 io.to(newConveration.id).emit('msg', { nick, msg });
             });
 
-            user1.socket.on('search new', function() {
-                const talking = conversations.findIndex(
-                    conversation =>
-                        conversation.users.user1.id === socket.id ||
-                        conversation.users.user2.id === socket.id
+            // Searchnig new person
+            const searchNew = (actuallUser, otherUser) => {
+                actuallUser.socket.removeAllListeners('msg');
+                otherUser.socket.removeAllListeners('msg');
+                actuallUser.socket.removeAllListeners('search new');
+                otherUser.socket.removeAllListeners('search new');
+
+                actuallUser.socket.broadcast
+                    .to(newConveration.id)
+                    .emit('closed');
+                actuallUser.socket.emit('search new');
+
+                actuallUser.socket.leave(newConveration.id);
+                otherUser.socket.leave(newConveration.id);
+
+                conversations = conversations.filter(
+                    conversation => conversation.id !== newConveration.id
                 );
+            };
 
-                if (talking > -1) {
-                    conversations[talking].users.user1.socket.leave(
-                        conversations[talking].id
-                    );
-                    conversations[talking].users.user2.socket.leave(
-                        conversations[talking].id
-                    );
+            user1.socket.on('search new', () => searchNew(user1, user2));
+            user2.socket.on('search new', () => searchNew(user2, user1));
 
-                    user1.socket.emit('search new');
-                    user2.socket.emit('closed');
-
-                    conversations.splice(talking, 1);
-                }
-            });
-
-            user2.socket.on('search new', function() {
-                const talking = conversations.findIndex(
-                    conversation =>
-                        conversation.users.user1.id === socket.id ||
-                        conversation.users.user2.id === socket.id
-                );
-
-                if (talking > -1) {
-                    conversations[talking].users.user1.socket.leave(
-                        conversations[talking].id
-                    );
-                    conversations[talking].users.user2.socket.leave(
-                        conversations[talking].id
-                    );
-
-                    user2.socket.emit('search new');
-                    user1.socket.emit('closed');
-
-                    conversations.splice(talking, 1);
-                }
-            });
-
+            // Delete user from users who are searching conversation
             users = users.filter(
                 user => user.id !== socket.id && user.id !== randomUser.id
             );
@@ -117,6 +101,8 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         io.emit('usersLength', io.engine.clientsCount);
+
+        // Check if user is in conversation
         const talking = conversations.findIndex(
             conversation =>
                 conversation.users.user1.id === socket.id ||
@@ -124,14 +110,20 @@ io.on('connection', socket => {
         );
 
         if (talking > -1) {
-            io.to(conversations[talking].id).emit('closed');
-            conversations[talking].users.user1.socket.leave(
-                conversations[talking].id
+            const conversation = conversations[talking];
+            io.to(conversation.id).emit('closed');
+
+            conversation.users.user1.socket.removeAllListeners('msg');
+            conversation.users.user2.socket.removeAllListeners('msg');
+            conversation.users.user1.socket.removeAllListeners('search new');
+            conversation.users.user2.socket.removeAllListeners('search new');
+
+            conversation.users.user1.socket.leave(conversation.id);
+            conversation.users.user2.socket.leave(conversation.id);
+
+            conversations = conversations.filter(
+                conv => conv.id !== conversation.id
             );
-            conversations[talking].users.user2.socket.leave(
-                conversations[talking].id
-            );
-            conversations.splice(talking, 1);
         } else {
             users = users.filter(user => user.id !== socket.id);
         }
