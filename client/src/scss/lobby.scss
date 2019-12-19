@@ -8,13 +8,14 @@
         position: relative;
         flex-basis: 50%;
         background-color: #e67e22;
-        background-image: url('../img/conversation.jpg');
+        background-image: url('../img/conv.jpg');
         background-position: center 72%;
         background-size: cover;
         @media (max-width: 800px) {
             height: 30vh;
             flex-basis: auto;
             min-height: 200px;
+            background-image: url('../img/conv-small.jpg');
         }
         &::after {
             content: '';
