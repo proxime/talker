@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import './scss/index.scss';
-import './utils/fontawesome/css/all.min.css';
 import Lobby from './components/Lobby/Lobby';
 import Conversation from './components/Conversation/Conversation';
 import { Provider } from 'react-redux';
 import store from './store';
 import socket from './socket';
+
+import './scss/index.scss';
 
 function App() {
     useEffect(() => {

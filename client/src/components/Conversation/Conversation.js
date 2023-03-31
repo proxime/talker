@@ -4,6 +4,8 @@ import ConversationForm from './ConversationForm';
 import ConversationMain from './ConversationMain';
 import ConversationDisconnect from './ConversationDisconnect';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
 
 const Conversation = ({
     opponent,
@@ -27,7 +29,7 @@ const Conversation = ({
                         className="conversation__search-new"
                         onClick={() => handleSearchNew()}
                     >
-                        <i className="fas fa-redo-alt"></i>
+                        <FontAwesomeIcon icon={faRedo} />
                     </div>
                 )}
                 <ConversationMain
@@ -47,7 +49,7 @@ const Conversation = ({
     );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     opponent: state.socket.opponent,
     nick: state.socket.nick,
     connected: state.socket.connected,
