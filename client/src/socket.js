@@ -10,8 +10,8 @@ import {
 } from './actions/socket';
 
 export default (store) => {
-    const serverAddress = 'http://localhost:5000';
-    // const deployAddress = '/';
+    // const serverAddress = 'http://localhost:5000';
+    const serverAddress = '/';
 
     const socket = io(serverAddress);
 
